@@ -1,0 +1,28 @@
+{
+  "name": "qatool",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^6.4.0",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^5.16.0",
+    "adm-zip": "^0.5.9",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13",
+    "multer": "^1.4.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "start": "node server/index.js",
+    "client": "cd client && npm start",
+    "server": "nodemon server/index.js",
+    "dev": "concurrently -n 'server,client' -c 'red,green'  \"npm run server\" \"npm run client\""
+  }
+}
