@@ -9,19 +9,31 @@
     background-position: left;
     height: 100vh;
     .ant-col{
-        background-color: #FFF;
-        height: 100vh;
-        display: flex;
-        align-items: center;
         box-shadow: 1px 0px 8px #0000006b;
         .ant-card{
-            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
             .ant-card-body{
                 padding: 42px;
+                width: 100%;
                 .ant-typography{
                     color:#29125f;
                     font-weight: 800;
                     font-size: 34px;
+                }
+                .ant-form-item{
+                    &:first-of-type{  
+                        margin-bottom: 0;
+                    }
+                    &:last-of-type{
+                        margin-top: 40px;
+                        margin-bottom: 0;
+                    }
+                    
+                    .ant-col{
+                        box-shadow: none;
+                    }
                 }
             }
         }
