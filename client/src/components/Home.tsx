@@ -1,16 +1,20 @@
-
 import React, { FC } from "react";
-import { Row, Col } from 'antd';
+import { Row, Col, Card, Typography } from "antd";
+import FileDrag from "../global/FileDrag";
+
+const { Title } = Typography;
 
 const Home: FC = () => (
-    <Row>
-        <Col span={18} push={6}>
-            col-18 col-push-6
-        </Col>
-        <Col span={6} pull={18}>
-            col-6 col-pull-18
-        </Col>
-    </Row>
+    <div id="Home">
+        <Row>
+            <Col xs={24} sm={24} md={13} xl={10} xxl={13}>
+                <Card bordered={false}>
+                    <Title level={2}>Concept QA Tool</Title>
+                    <FileDrag />
+                </Card>
+            </Col>
+        </Row>
+    </div>
 );
 
 export default Home;
