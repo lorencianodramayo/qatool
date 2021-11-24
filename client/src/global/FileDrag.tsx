@@ -1,7 +1,6 @@
-import React, { FC } from 'react';
-import { Form, Upload, Button, message } from 'antd';
+import React, { FC, useState } from 'react';
+import { Form, Upload, Button } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
-
 
 const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -11,19 +10,31 @@ const normFile = (e: any) => {
 };
 
 const FileDrag: FC = () => {
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
-    };
-    
-    const onUpload = (data: any) => {
-        const { status } = data.file;
+    const [fileList, setFileList] = useState([] as any);
+    const [uploading, setUploading] = useState(false);
+    const formData = new FormData();
+   
+    const props = {
+        onRemove: (file: any) => {
+            setFileList(fileList.filter(function(el: { name: any; }) { return el.name !== file.name }))
+        },
+        beforeUpload: (file: any) => {
+            setFileList((fileList: any) => [...fileList, file]);
+          return false;
+        },
+        showUploadList: {
+            showRemoveIcon: !uploading,
+        },
+        fileList,
+      };
 
-        if (status === "done") {
-            message.success(`${data.file.name} file uploaded successfully.`);
-        } else if (status === "error") {
-            message.error(`${data.file.name} file upload failed.`);
-        }
-    }
+    const onFinish = () => {
+        fileList.forEach((file: string | Blob) => {
+            formData.append('files[]', file);
+        });
+
+        setUploading(true);
+    };
 
     return (
         <Form
@@ -32,7 +43,7 @@ const FileDrag: FC = () => {
         >
             <Form.Item>
                 <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-                    <Upload.Dragger name="files" action="/upload" multiple accept=".zip" onChange={onUpload}>
+                    <Upload.Dragger name="files" action="/upload" multiple accept=".zip" {...props}>
                         <p className="ant-upload-drag-icon">
                             <InboxOutlined />
                         </p>
@@ -43,8 +54,8 @@ const FileDrag: FC = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{}}>
-                <Button type="primary" htmlType="submit" loading={true} disabled={false}>
-                    Ready to go!
+                <Button type="primary" htmlType="submit" loading={uploading} disabled={fileList.length === 0}>
+                    {fileList.length === 0? '' : uploading? "Uploading..." : "Let's go!"}
                 </Button>
             </Form.Item>
         </Form>
