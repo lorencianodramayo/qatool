@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Form, Upload, Button } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -13,8 +14,10 @@ const FileDrag: FC = () => {
     const [fileList, setFileList] = useState([] as any);
     const [uploading, setUploading] = useState(false);
     const formData = new FormData();
-   
     const props = {
+        name: "files",
+        multiple: true,
+        accept: ".zip",
         onRemove: (file: any) => {
             setFileList(fileList.filter(function(el: { name: any; }) { return el.name !== file.name }))
         },
@@ -34,6 +37,15 @@ const FileDrag: FC = () => {
         });
 
         setUploading(true);
+
+        axios.post('/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(res=> {
+            console.log(res);
+            setUploading(false);
+        })
     };
 
     return (
@@ -43,7 +55,7 @@ const FileDrag: FC = () => {
         >
             <Form.Item>
                 <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-                    <Upload.Dragger name="files" action="/upload" multiple accept=".zip" {...props}>
+                    <Upload.Dragger  {...props} style={{ display: uploading? 'none': 'block'}}>
                         <p className="ant-upload-drag-icon">
                             <InboxOutlined />
                         </p>
@@ -54,8 +66,8 @@ const FileDrag: FC = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{}}>
-                <Button type="primary" htmlType="submit" loading={uploading} disabled={fileList.length === 0}>
-                    {fileList.length === 0? '' : uploading? "Uploading..." : "Let's go!"}
+                <Button type="primary" htmlType="submit" loading={uploading} disabled={fileList.length === 0} style={{ display: fileList.length === 0 ? 'none' : 'block'}}>
+                    { uploading? "Uploading..." : "Let's go!"}
                 </Button>
             </Form.Item>
         </Form>

@@ -12,27 +12,79 @@
         box-shadow: 1px 0px 8px #0000006b;
         .ant-card{
             height: 100vh;
-            display: flex;
-            align-items: center;
-            .ant-card-body{
-                padding: 42px;
-                width: 100%;
-                .ant-typography{
-                    color:#29125f;
+            .ant-card-head{
+                display: flex;
+                justify-content: left;
+                min-height: 12em;
+                align-items: flex-end;
+                background-color: #140633;
+                background-image: url(./assets/right-bg.svg), url(./assets/left-bg.svg);
+                background-repeat: no-repeat;
+                background-position: 203%, -121%;
+                background-size: 70%;
+                .title{
+                    color:#fff;
                     font-weight: 800;
-                    font-size: 34px;
+                    font-size: 40px;
+                    .sub-title{
+                        margin-bottom: 10px;
+                        color: #29125f;
+                        word-break: break-word;
+                        z-index: 3;
+                        background-image: linear-gradient(90deg,#e0238c,#f22076 47.43%,#f96666);
+                        background-size: 100%;
+                        -webkit-background-clip: text;
+                        -moz-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        -moz-text-fill-color: transparent;
+                    }
                 }
+            }
+            .ant-card-body{
+                padding: 0;
+                width: 100%;
                 .ant-form-item{
-                    &:first-of-type{  
-                        margin-bottom: 0;
-                    }
-                    &:last-of-type{
-                        margin-top: 40px;
-                        margin-bottom: 0;
-                    }
-                    
                     .ant-col{
                         box-shadow: none;
+                    }
+                }
+
+                .ant-carousel{
+                    .slick-list{
+                        height: 68vh;
+                        overflow-y: scroll;
+                    }
+                }
+
+                .ant-row{
+                    .ant-col{
+                        box-shadow: none;
+                        &:first-of-type{
+                            padding:42px;
+                            .ant-col{
+                                padding: 0;
+                            }
+                        }
+                    }
+                }
+
+                label{
+                    font-weight: 700;
+                    font-size: 16px;
+                }
+
+                .submit-row{
+                    .submit-col{
+                        display: flex;
+                        position: absolute;
+                        bottom: 0;
+                        width: 100%;
+                        padding: 1em 42px !important;
+                        box-shadow: 0px 0 1px #938d8de6;
+                        .ant-btn-background-ghost{
+                            color: #130633;
+                            border-color: #130633;
+                        }
                     }
                 }
             }
